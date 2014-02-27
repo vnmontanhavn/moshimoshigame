@@ -14,5 +14,5 @@
 }
 -(void)addContato:(NSString*)nome withTipo:(NSInteger)tipo withimage:(NSString*)image withLevel:(NSInteger)level withVida:(NSInteger)vida withatak:(NSInteger)atak withdef:(NSInteger)defesa;
 -(monsters*) getmonster:(NSInteger)coluna withLine:(NSInteger)linha;
-+(monsterList*)getInstance;
+
 @end

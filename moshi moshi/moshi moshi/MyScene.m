@@ -10,9 +10,11 @@
 #import "monsterList.h"
 @implementation MyScene
 BOOL minhavez =YES;
-
+bool havewinner=NO;
 monsters *player ;
 monsters *enemy ;
+
+SKNode *emuso;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
@@ -32,9 +34,10 @@ monsters *enemy ;
         
         
         monsterList *Lista = [[monsterList alloc]init];
+        monsterList *Lista2 = [[monsterList alloc]init];
         CGPoint location = CGPointMake(20, 150);
          player = [Lista getmonster:0 withLine:0];
-         enemy = [Lista getmonster:0 withLine:0];
+         enemy = [Lista2 getmonster:0 withLine:0];
         SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:[player imagem]];
         
         sprite.position = location;
@@ -76,31 +79,109 @@ monsters *enemy ;
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
+        
+    
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    SKNode *uso = [self childNodeWithName:@"eu"];
+    emuso = [self childNodeWithName:@"eu"];
     NSMutableArray *coisas = [[NSMutableArray alloc] init];
-    if (!uso.hasActions) {
+    if (!emuso.hasActions) {
     if ([node.name isEqualToString:@"fireButtonNode"]) {
       //  NSLog(@"ta dentro!!");
+        if ([enemy vidaatual]<1) {
+            NSLog(@"sua vida vida= %ld  de %ld", (long)[enemy vidaatual], (long)[enemy vidatotal]);
+            NSLog(@"vc ganhou!");
+        }else{
         [coisas addObject:[SKAction moveBy:CGVectorMake(100, 100) duration:1]];
         
         [player ataksimples:enemy];
         
+        NSLog(@"inimigo toma dano:  vida= %ld  de %ld", (long)[enemy vidaatual], (long)[enemy vidatotal]);
+        
+        
         [coisas addObject:[SKAction moveBy:CGVectorMake(-100, -100) duration:1]];
-        [uso runAction:[SKAction sequence:coisas]];
+            [emuso runAction:[SKAction sequence:coisas]];
+    
+        }
+       
+        
+        minhavez = NO;
     }
+    
     }
     
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    if (minhavez) {
-        
+    
+    SKNode *node;
+    if ([player vidaatual]<1||[enemy vidaatual]<1) {
+        havewinner=true;
+    }else{}
+    if (havewinner) {
+        if ([player vidaatual]>[enemy vidaatual]) {
+            NSLog(@"vc ganhou");
+        }
+        else NSLog(@"vc perdeu");
     }
     
+    else{
+        
+    if (!minhavez) {
+        //SKNode *node = [self nodeAtPoint:location];
+       // [self hasActions]
+        SKAction * actionMoveDone = [SKAction removeFromParent];
+        node =[self childNodeWithName:@"fireButtonNode"];
+        [node runAction:actionMoveDone];
+        if (![emuso hasActions]) {
+        emuso = [self childNodeWithName:@"ele"];
+        NSMutableArray *coisas = [[NSMutableArray alloc] init];
+        
+            
+            //  NSLog(@"ta dentro!!");
+            if ([player vidaatual]<1) {
+                NSLog(@"sua vida vida= %ld  de %ld", (long)[player vidaatual], (long)[player vidatotal]);
+                NSLog(@"vc perdeu!");
+            }else{
+                
+                [coisas addObject:[SKAction moveBy:CGVectorMake(-100, -100) duration:1]];
+                
+                [enemy ataksimples:player];
+                
+                NSLog(@"vc toma dano:  vida= %ld  de %ld", (long)[player vidaatual], (long)[player vidatotal]);
+                
+                
+                [coisas addObject:[SKAction moveBy:CGVectorMake(100, 100) duration:1]];
+                [emuso runAction:[SKAction sequence:coisas]];
+                
+            }
+            
+            minhavez = YES;
+        }
+
+        
+    }
+    else{
+        
+        if(![self childNodeWithName:@"fireButtonNode"]){
+            SKLabelNode *aux = [[SKLabelNode alloc] init];
+            aux.text = @"aparece na tela";
+            aux.name =@"fireButtonNode";
+            CGPoint loc = CGPointMake(150, 100);
+            aux.position = loc;
+            
+            [self addChild:aux];
+
+        }
+        
+        //UITouch *touch = [touches anyObject];
+        //CGPoint location = [touch locationInNode:self];
+       // SKNode *node = [self nodeAtPoint:location];
+        
+        }
+    }
 }
 
 @end

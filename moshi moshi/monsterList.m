@@ -10,18 +10,18 @@
 #import "monsters.h"
 @implementation monsterList
 
-+(monsterList*)getInstance{
-    static monsterList *instance = nil;
-    if(!instance){
-        instance = [[super allocWithZone:nil] init];
-    }
-    return instance;
-}
-
-+(id)allocWithZone:(struct _NSZone *)zone{
-    
-    return [self getInstance];
-}
+//+(monsterList*)getInstance{
+//    static monsterList *instance = nil;
+//    if(!instance){
+//        instance = [[super allocWithZone:nil] init];
+//    }
+//    return instance;
+//}
+//
+//+(id)allocWithZone:(struct _NSZone *)zone{
+//    
+//    return [self getInstance];
+//}
 
 
 
