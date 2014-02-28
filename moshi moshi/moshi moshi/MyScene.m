@@ -72,6 +72,7 @@ SKNode *emuso;
         aux.position = loc;
         
         [self addChild:aux];
+        [player levelUp];
     }
     return self;
 }
@@ -117,14 +118,83 @@ SKNode *emuso;
     /* Called before each frame is rendered */
     
     SKNode *node;
+    SKLabelNode *baka;
+    if(![self childNodeWithName:@"PlayerLife"]){
+    SKLabelNode *vidaplayer = [[SKLabelNode alloc]init];
+        vidaplayer.name = @"PlayerLife";
+        [vidaplayer setText:[NSString stringWithFormat:@"%ld",(long)[player vidaatual]]];
+    vidaplayer.fontSize = 30;
+    CGPoint loc = CGPointMake(200, 200);
+    vidaplayer.position = loc;
+    
+    [self addChild:vidaplayer];
+    }
+    if ([self childNodeWithName:@"PlayerLife"]) {
+        baka = (SKLabelNode*)[self childNodeWithName:@"PlayerLife"];
+        if ([[baka text]isEqualToString:[NSString stringWithFormat:@"%ld",(long)[player vidaatual]]]) {
+            
+        }
+        else{
+            SKAction * updelfase = [SKAction removeFromParent];
+            node =[self childNodeWithName:@"PlayerLife"];
+            [node runAction:updelfase];
+        }
+    }
+    
+    if(![self childNodeWithName:@"EnemyLife"]){
+        SKLabelNode *vidaenemy = [[SKLabelNode alloc]init];
+                vidaenemy.name = @"EnemyLife";
+        [vidaenemy setText:[NSString stringWithFormat:@"%ld",(long)[player vidaatual]]];
+        vidaenemy.fontSize = 30;
+        CGPoint loc = CGPointMake(200, 200);
+        vidaenemy.position = loc;
+        
+        [self addChild:vidaenemy];
+    }
+    if ([self childNodeWithName:@"EnemyLife"]) {
+        baka = (SKLabelNode*)[self childNodeWithName:@"EnemyLife"];
+        if ([[baka text]isEqualToString:[NSString stringWithFormat:@"%ld",(long)[player vidaatual]]]) {
+            
+        }
+        else{
+            SKAction * updelfase = [SKAction removeFromParent];
+            node =[self childNodeWithName:@"EnemyLife"];
+            [node runAction:updelfase];
+        }
+    }
+
+    
+    
+  //  
+
+    
+    
     if ([player vidaatual]<1||[enemy vidaatual]<1) {
         havewinner=true;
     }else{}
     if (havewinner) {
         if ([player vidaatual]>[enemy vidaatual]) {
-            NSLog(@"vc ganhou");
+            if(![self childNodeWithName:@"Chalkduster1"]){
+                SKLabelNode *myLabel = [[SKLabelNode alloc]init];
+                myLabel.name =@"Chalkduster1";
+                myLabel.text = @"vc ganhou";
+                myLabel.fontSize = 30;
+                myLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+                [self addChild:myLabel];
+                
+            }
         }
-        else NSLog(@"vc perdeu");
+        else{
+            if(![self childNodeWithName:@"Chalkduster2"]){
+                SKLabelNode *myLabel = [[SKLabelNode alloc]init];
+                myLabel.name =@"Chalkduster2";
+                myLabel.text = @"vc perdeu";
+                myLabel.fontSize = 30;
+                myLabel.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
+                [self addChild:myLabel];
+            }
+   
+        }
     }
     
     else{
@@ -176,12 +246,13 @@ SKNode *emuso;
 
         }
         
-        //UITouch *touch = [touches anyObject];
-        //CGPoint location = [touch locationInNode:self];
-       // SKNode *node = [self nodeAtPoint:location];
+        
         
         }
     }
+//    SKAction * actionMoveDone = [SKAction removeFromParent];
+//    node =[self childNodeWithName:@"PlayerLife"];
+//    [node runAction:actionMoveDone];
 }
 
 @end

@@ -25,7 +25,18 @@
 }
 
 -(void)ataksimples:(monsters*)enemy{
-    [enemy setVidaatual:[enemy vidaatual]-([self ataque]-[enemy defesa])];
+    NSInteger damage;
+    NSInteger d10;
+    float aux = 0.0;
+    d10=arc4random()%11;
+    if (d10<10) {
+        aux = [self ataque]*((float)d10/10);
+        damage = [self ataque]+aux;
+    }
+    else{
+        damage= 2*[self ataque];
+    }
+    [enemy setVidaatual:[enemy vidaatual]-(damage-[enemy defesa])];
 }
 
 -(void)atakhabilidade1:(monsters*)enemy{
@@ -53,6 +64,17 @@
     Habilidades *aux = [[Habilidades alloc]init];
     damage = [aux getdamage:_habilidade4 withType:_tipo withAtak:_ataque];
     [enemy setVidaatual:[enemy vidaatual]-(damage - [enemy defesa])];
+}
+
+-(void)levelUp{
+    [self setLevel:([self level]+1)];
+    //os valores setados abaixo tem de variar conforme o nome do monstro, no qual tem uma historia e ela deve contar no calculo.
+    [self setAtaque:([self ataque]+10)];
+    [self setDefesa:([self defesa]+5)];
+}
+
+-(void)verificaLevel{
+    
 }
 
 @end

@@ -30,7 +30,7 @@
     self = [super init];
     if (!lista) {
     lista = [[NSMutableDictionary alloc]init];
-        [self addContato:@"teste" withTipo:@"teste" withimage:@"Spaceship" withLevel:1 withVida:5 withatak:3 withdef:1];
+        [self addContato:@"teste" withTipo:@"teste" withimage:@"Spaceship" withLevel:1 withVida:500 withatak:20 withdef:5];
     }
     return self;
 }

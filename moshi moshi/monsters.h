@@ -29,4 +29,5 @@
 -(void)atakhabilidade2:(monsters*)enemy;
 -(void)atakhabilidade3:(monsters*)enemy;
 -(void)atakhabilidade4:(monsters*)enemy;
+-(void)levelUp;
 @end
